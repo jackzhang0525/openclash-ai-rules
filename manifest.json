@@ -1,0 +1,130 @@
+{
+  "chatgpt": {
+    "name": "ChatGPT",
+    "count": 22,
+    "source": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/openai.list",
+    "default": "proxy",
+    "sha256": "bac4d22bd477b0efbed980e619cffeda845ff426c8886e90870548e98241500a",
+    "build": "upstream"
+  },
+  "claude": {
+    "name": "Claude",
+    "count": 9,
+    "source": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/anthropic.list",
+    "default": "proxy",
+    "sha256": "807088f750cf29c2c0a7e3afa8520fe87c5dbb58e6c6f2a8b2a1e74b7a99a34a",
+    "build": "upstream"
+  },
+  "gemini": {
+    "name": "Gemini",
+    "count": 47,
+    "source": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-gemini.list",
+    "default": "proxy",
+    "sha256": "7c6080ee1588b54c09315e452dbb7379a5a3989d8e428182ddd2b7cc41b9ceb0",
+    "build": "upstream"
+  },
+  "copilot": {
+    "name": "Copilot",
+    "count": 5,
+    "source": "local seeds + custom/copilot.list",
+    "default": "proxy",
+    "sha256": "1d407d934a83431bd431bb7ac48d2229f0f1e4d76df834db72e9e8427bcda418",
+    "build": "local"
+  },
+  "grok": {
+    "name": "Grok",
+    "count": 4,
+    "source": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/xai.list",
+    "default": "proxy",
+    "sha256": "bcb943dbc025670fe18c85712e81faf990bf00ee5e1737fb69f9055c1867ecef",
+    "build": "upstream"
+  },
+  "perplexity": {
+    "name": "Perplexity",
+    "count": 5,
+    "source": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/perplexity.list",
+    "default": "proxy",
+    "sha256": "8f9d69bc13df1b1ad6451016f2920b3e4aabf900169103ff627bf8172d2000b8",
+    "build": "upstream"
+  },
+  "openrouter": {
+    "name": "OpenRouter",
+    "count": 1,
+    "source": "local seeds + custom/openrouter.list",
+    "default": "proxy",
+    "sha256": "da3d407fb3328244c505db8cd36ccd17454c2dae6cd27f786f17221c1a775b6d",
+    "build": "local"
+  },
+  "poe": {
+    "name": "Poe",
+    "count": 2,
+    "source": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/poe.list",
+    "default": "proxy",
+    "sha256": "936c7187b49829ddc6ef9f573f7ceae674fb159b2b734867959c78189eac1461",
+    "build": "upstream"
+  },
+  "cursor": {
+    "name": "Cursor",
+    "count": 4,
+    "source": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cursor.list",
+    "default": "proxy",
+    "sha256": "d881955a6b95086c5fc7aacc5b75ce1783e893b85cf0f07b7a69089ad3b8d9d7",
+    "build": "upstream"
+  },
+  "windsurf": {
+    "name": "Windsurf",
+    "count": 4,
+    "source": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/windsurf.list",
+    "default": "proxy",
+    "sha256": "d3ca81601e15f5d0ee5d6d91e69cd598731cd99897c1fe943b81a1e3c38fdf4a",
+    "build": "upstream"
+  },
+  "deepseek": {
+    "name": "DeepSeek",
+    "count": 2,
+    "source": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/deepseek.list",
+    "default": "direct",
+    "sha256": "09b9fa8ad50385bdb9648e64afc8e31e5012138355bc7680c10ef255ca51227c",
+    "build": "upstream"
+  },
+  "qwen": {
+    "name": "通义千问",
+    "count": 5,
+    "source": "local seeds + custom/qwen.list",
+    "default": "direct",
+    "sha256": "bcacbbf6f9fffc8022fa317543a4ad79feb1ae10cd5fe507a155a29168940bbb",
+    "build": "local"
+  },
+  "kimi": {
+    "name": "Kimi",
+    "count": 4,
+    "source": "local seeds + custom/kimi.list",
+    "default": "direct",
+    "sha256": "7a43a1f05d520013a4c9accfba16e922b88965a3789c5e3349f4d85282e82961",
+    "build": "local"
+  },
+  "doubao": {
+    "name": "豆包",
+    "count": 32,
+    "source": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/doubao.list",
+    "default": "direct",
+    "sha256": "38d1c0f33e6b5814a0048bee37bde594ea822dc1b6224cf85a4d7b7707fb236f",
+    "build": "upstream"
+  },
+  "glm": {
+    "name": "智谱GLM",
+    "count": 3,
+    "source": "local seeds + custom/glm.list",
+    "default": "direct",
+    "sha256": "33095279a6d788d719a3242fb3549277ca85b662684dea73f594d5374ba06840",
+    "build": "local"
+  },
+  "minimax": {
+    "name": "MiniMax",
+    "count": 4,
+    "source": "local seeds + custom/minimax.list",
+    "default": "direct",
+    "sha256": "ff0674ac77ac76070b6c808f0a13440f45480bcdb9f3400b5dd469a00c0b17c0",
+    "build": "local"
+  }
+}
