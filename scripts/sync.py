@@ -28,6 +28,27 @@ SERVICES = [
  ('glm', '智谱GLM', None, 'direct', 'chatglm.cn bigmodel.cn z.ai'),
  ('minimax', 'MiniMax', None, 'direct', 'minimax.io minimaxi.com minimax.chat hailuoai.com'),
 ]
+CHECK_URLS = {
+ 'chatgpt': 'https://chatgpt.com/',
+ 'claude': 'https://claude.ai/',
+ 'gemini': 'https://gemini.google.com/',
+ 'copilot': 'https://copilot.microsoft.com/',
+ 'grok': 'https://grok.com/',
+ 'perplexity': 'https://www.perplexity.ai/',
+ 'openrouter': 'https://openrouter.ai/',
+ 'poe': 'https://poe.com/',
+ 'cursor': 'https://www.cursor.com/',
+ 'windsurf': 'https://windsurf.com/',
+ 'deepseek': 'https://www.deepseek.com/',
+ 'qwen': 'https://www.qwen.ai/',
+ 'kimi': 'https://www.kimi.com/',
+ 'doubao': 'https://www.doubao.com/',
+ 'glm': 'https://chatglm.cn/',
+ 'minimax': 'https://www.minimax.io/',
+}
+EXCLUDE = '到期|剩余|流量|套餐|官网|重置|Expire|Traffic|Reset'
+REGIONS = '美国|US|United States|日本|JP|新加坡|SG'
+
 DOMAIN = re.compile(r'(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9-]{2,63}\Z')
 
 def validate(text):
@@ -70,7 +91,9 @@ def build(offline=False):
     providers, rules = {}, []
     for slug, name, upstream, policy, seeds in SERVICES:
         label = 'AI-' + name
-        groups.append({'name': label, 'type': 'select', 'proxies': ['DIRECT' if policy == 'direct' else 'AI默认出口'], 'include-all-proxies': True, 'filter': '美国|US|United States|日本|JP|新加坡|SG'})
+        preferred = label + '-手动优先'
+        groups.append({'name': preferred, 'type': 'select', 'proxies': ['DIRECT' if policy == 'direct' else 'AI默认出口'], 'include-all-proxies': True, 'exclude-filter': EXCLUDE})
+        groups.append({'name': label, 'type': 'fallback', 'proxies': [preferred], 'include-all-proxies': True, 'exclude-filter': EXCLUDE, 'url': CHECK_URLS[slug], 'expected-status': '200-299', 'interval': 600, 'timeout': 8000, 'lazy': True, 'max-failed-times': 3})
         providers['ai-' + slug] = {'type': 'http', 'behavior': 'domain', 'format': 'yaml', 'url': 'https://raw.githubusercontent.com/jackzhang0525/openclash-ai-rules/main/rules/' + slug + '.yaml', 'path': './rule_provider/jack-ai-' + slug + '.yaml', 'interval': 86400, 'proxy': '规则下载'}
         # Local core domains also provide a bootstrap fallback before provider download.
         rules.extend('DOMAIN-SUFFIX,' + d + ',' + label for d in seeds.split())
