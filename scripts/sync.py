@@ -81,19 +81,27 @@ def build(offline=False):
         body = 'payload:\n' + ''.join('  - ' + json.dumps(d) + '\n' for d in sorted(values))
         outputs['rules/' + slug + '.yaml'] = body
         manifest[slug] = {'name': name, 'count': len(values), 'source': BASE + upstream + '.list' if upstream else 'local seeds + custom/' + slug + '.list', 'default': policy, 'sha256': hashlib.sha256(body.encode()).hexdigest(), 'build': 'seed-only' if offline and upstream else 'upstream' if upstream else 'local'}
+    def automatic(name, url, kind='url-test', proxies=None, interval=600):
+        group = {'name': name, 'type': kind, 'include-all-proxies': True,
+                 'exclude-filter': EXCLUDE, 'url': url, 'expected-status': '200-299',
+                 'interval': interval, 'timeout': 8000, 'lazy': False,
+                 'max-failed-times': 3}
+        if proxies:
+            group['proxies'] = proxies
+        if kind == 'url-test':
+            group['tolerance'] = 150
+        return group
     groups = [
-      {'name': '规则下载', 'type': 'select', 'proxies': ['DIRECT'], 'include-all-proxies': True},
-      {'name': 'AI默认出口', 'type': 'select', 'proxies': ['普通代理'], 'include-all-proxies': True, 'filter': '美国|US|United States|日本|JP|新加坡|SG'},
-      {'name': '普通代理', 'type': 'select', 'proxies': ['DIRECT'], 'include-all-proxies': True},
-      {'name': '媒体自动测速', 'type': 'url-test', 'proxies': ['普通代理'], 'include-all-proxies': True, 'filter': '流媒体|Media|Netflix|香港|HK|日本|JP|新加坡|SG', 'url': 'https://www.gstatic.com/generate_204', 'interval': 300, 'tolerance': 150, 'lazy': True},
-      {'name': '媒体分流', 'type': 'select', 'proxies': ['媒体自动测速', '普通代理'], 'include-all-proxies': True},
+      automatic('规则下载', 'https://raw.githubusercontent.com/jackzhang0525/openclash-ai-rules/main/rules/chatgpt.yaml', 'fallback', ['DIRECT']),
+      automatic('普通代理', 'https://www.gstatic.com/generate_204', interval=300),
+      automatic('AI默认出口', 'https://www.gstatic.com/generate_204', 'fallback'),
+      automatic('媒体自动测速', 'https://www.youtube.com/generate_204', interval=300),
+      automatic('媒体分流', 'https://www.youtube.com/generate_204', interval=300),
     ]
     providers, rules = {}, []
     for slug, name, upstream, policy, seeds in SERVICES:
         label = 'AI-' + name
-        preferred = label + '-手动优先'
-        groups.append({'name': preferred, 'type': 'select', 'proxies': ['DIRECT' if policy == 'direct' else 'AI默认出口'], 'include-all-proxies': True, 'exclude-filter': EXCLUDE})
-        groups.append({'name': label, 'type': 'fallback', 'proxies': [preferred], 'include-all-proxies': True, 'exclude-filter': EXCLUDE, 'url': CHECK_URLS[slug], 'expected-status': '200-299', 'interval': 600, 'timeout': 8000, 'lazy': True, 'max-failed-times': 3})
+        groups.append(automatic(label, CHECK_URLS[slug], 'fallback', ['DIRECT'] if policy == 'direct' else None))
         providers['ai-' + slug] = {'type': 'http', 'behavior': 'domain', 'format': 'yaml', 'url': 'https://raw.githubusercontent.com/jackzhang0525/openclash-ai-rules/main/rules/' + slug + '.yaml', 'path': './rule_provider/jack-ai-' + slug + '.yaml', 'interval': 86400, 'proxy': '规则下载'}
         # Local core domains also provide a bootstrap fallback before provider download.
         rules.extend('DOMAIN-SUFFIX,' + d + ',' + label for d in seeds.split())
