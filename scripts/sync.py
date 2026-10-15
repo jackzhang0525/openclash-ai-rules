@@ -48,6 +48,17 @@ CHECK_URLS = {
 }
 EXCLUDE = '到期|剩余|流量|套餐|官网|重置|Expire|Traffic|Reset'
 REGIONS = '美国|US|United States|日本|JP|新加坡|SG'
+US_ONLY = r'美国|美國|United States|(?i)\bUS\b'
+OVERSEAS = r'美国|美國|United States|日本|新加坡|(?i)\b(US|JP|SG)\b'
+MEDIA = [
+ ('媒体-YouTube', 'https://www.youtube.com/generate_204', 'youtube.com youtu.be googlevideo.com ytimg.com youtubei.googleapis.com'),
+ ('媒体-Netflix', 'https://www.netflix.com/', 'netflix.com netflix.net nflxvideo.net nflximg.net nflximg.com nflxso.net nflxext.com'),
+ ('媒体-Disney', 'https://www.disneyplus.com/', 'disneyplus.com disney-plus.net dssott.com disneystreaming.com bamgrid.com'),
+ ('媒体-Spotify', 'https://open.spotify.com/', 'spotify.com scdn.co'),
+ ('媒体-PrimeVideo', 'https://www.primevideo.com/', 'primevideo.com aiv-cdn.net aiv-delivery.net'),
+ ('媒体-Max', 'https://www.max.com/', 'max.com hbo.com hbomax.com'),
+ ('媒体-Hulu', 'https://www.hulu.com/', 'hulu.com huluim.com'),
+]
 
 DOMAIN = re.compile(r'(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9-]{2,63}\Z')
 
@@ -99,15 +110,20 @@ def build(offline=False):
       automatic('媒体分流', 'https://www.youtube.com/generate_204', interval=300),
     ]
     providers, rules = {}, []
+    next(g for g in groups if g['name'] == 'AI默认出口')['filter'] = US_ONLY
     for slug, name, upstream, policy, seeds in SERVICES:
         label = 'AI-' + name
-        groups.append(automatic(label, CHECK_URLS[slug], 'fallback', ['DIRECT'] if policy == 'direct' else None))
+        group = automatic(label, CHECK_URLS[slug], 'fallback', ['DIRECT'] if policy == 'direct' else None)
+        if policy == 'proxy':
+            group['filter'] = US_ONLY if slug in ('chatgpt', 'claude', 'gemini') else OVERSEAS
+        groups.append(group)
         providers['ai-' + slug] = {'type': 'http', 'behavior': 'domain', 'format': 'yaml', 'url': 'https://raw.githubusercontent.com/jackzhang0525/openclash-ai-rules/main/rules/' + slug + '.yaml', 'path': './rule_provider/jack-ai-' + slug + '.yaml', 'interval': 86400, 'proxy': '规则下载'}
         # Local core domains also provide a bootstrap fallback before provider download.
         rules.extend('DOMAIN-SUFFIX,' + d + ',' + label for d in seeds.split())
         rules.append('RULE-SET,ai-' + slug + ',' + label)
-    for domain in 'youtube.com youtu.be googlevideo.com ytimg.com youtubei.googleapis.com netflix.com netflix.net nflxvideo.net nflximg.net nflximg.com nflxso.net nflxext.com disneyplus.com disney-plus.net dssott.com disneystreaming.com bamgrid.com hulu.com huluim.com max.com hbo.com hbomax.com spotify.com scdn.co primevideo.com aiv-cdn.net aiv-delivery.net'.split():
-        rules.append('DOMAIN-SUFFIX,' + domain + ',媒体分流')
+    for label, url, domains in MEDIA:
+        groups.append(automatic(label, url, interval=600))
+        rules.extend('DOMAIN-SUFFIX,' + domain + ',' + label for domain in domains.split())
     dns = {'ipv6': False, 'respect-rules': False, 'default-nameserver!': ['223.5.5.5', '119.29.29.29'], 'nameserver!': ['https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query'], 'proxy-server-nameserver!': ['https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query'], 'fallback!': ['https://1.1.1.1/dns-query#规则下载', 'https://8.8.8.8/dns-query#规则下载'], '+fake-ip-filter': ['*.lan', '*.local', 'localhost', '+.ntp.org', '+.pool.ntp.org', '+.msftconnecttest.com', '+.msftncsi.com']}
     # JSON objects are valid YAML values; avoid a third-party YAML dependency.
     module = '# No subscription URLs, passwords or controller secrets.\n[YAML]\nmode: rule\nipv6: false\ntcp-concurrent: true\nunified-delay: true\n'
