@@ -1,10 +1,10 @@
 {
   "chatgpt": {
     "name": "ChatGPT",
-    "count": 22,
+    "count": 23,
     "source": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/openai.list",
     "default": "proxy",
-    "sha256": "bac4d22bd477b0efbed980e619cffeda845ff426c8886e90870548e98241500a",
+    "sha256": "fc0fe6e9094e4d4e56a740a7308fe7b970fd7874b9b3f2559c848b1b84fa89a3",
     "build": "upstream"
   },
   "claude": {
@@ -65,10 +65,10 @@
   },
   "cursor": {
     "name": "Cursor",
-    "count": 4,
+    "count": 5,
     "source": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cursor.list",
     "default": "proxy",
-    "sha256": "d881955a6b95086c5fc7aacc5b75ce1783e893b85cf0f07b7a69089ad3b8d9d7",
+    "sha256": "7ae44ef6fd4710000b131ed5358903a86f737bc2d53c6d60f88610a694a1297e",
     "build": "upstream"
   },
   "windsurf": {
