@@ -1,18 +1,18 @@
 {
   "chatgpt": {
     "name": "ChatGPT",
-    "count": 23,
+    "count": 24,
     "source": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/openai.list",
     "default": "proxy",
-    "sha256": "fc0fe6e9094e4d4e56a740a7308fe7b970fd7874b9b3f2559c848b1b84fa89a3",
+    "sha256": "28f16333319dcfaa4af199b8c66c49be96481d5db0a59d3520667d1ad7eec66d",
     "build": "upstream"
   },
   "claude": {
     "name": "Claude",
-    "count": 9,
+    "count": 19,
     "source": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/anthropic.list",
     "default": "proxy",
-    "sha256": "807088f750cf29c2c0a7e3afa8520fe87c5dbb58e6c6f2a8b2a1e74b7a99a34a",
+    "sha256": "54081094c2dbfd311c47f0ca6830723ce8be06e01f6c02eae3a9e80b7788e2ec",
     "build": "upstream"
   },
   "gemini": {
