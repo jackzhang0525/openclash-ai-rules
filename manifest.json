@@ -17,10 +17,10 @@
   },
   "gemini": {
     "name": "Gemini",
-    "count": 47,
+    "count": 50,
     "source": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-gemini.list",
     "default": "proxy",
-    "sha256": "7c6080ee1588b54c09315e452dbb7379a5a3989d8e428182ddd2b7cc41b9ceb0",
+    "sha256": "33c30ab31d23144dd5e5b55a95af289b3d91a9f28099817833e4dc6cce8e09dd",
     "build": "upstream"
   },
   "copilot": {
