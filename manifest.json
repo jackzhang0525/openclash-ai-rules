@@ -105,10 +105,10 @@
   },
   "doubao": {
     "name": "豆包",
-    "count": 32,
+    "count": 33,
     "source": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/doubao.list",
     "default": "direct",
-    "sha256": "38d1c0f33e6b5814a0048bee37bde594ea822dc1b6224cf85a4d7b7707fb236f",
+    "sha256": "618afc3a144f067eab8ac9b233c3e9974c5da55eef97f83cb966f7b976abcb3e",
     "build": "upstream"
   },
   "glm": {
