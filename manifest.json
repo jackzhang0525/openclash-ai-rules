@@ -9,10 +9,10 @@
   },
   "claude": {
     "name": "Claude",
-    "count": 19,
+    "count": 21,
     "source": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/anthropic.list",
     "default": "proxy",
-    "sha256": "54081094c2dbfd311c47f0ca6830723ce8be06e01f6c02eae3a9e80b7788e2ec",
+    "sha256": "3a4f96d8a2c4f5b99e31170373146d82c0f860d93e57caac137e1babd9eda5db",
     "build": "upstream"
   },
   "gemini": {
@@ -33,10 +33,10 @@
   },
   "grok": {
     "name": "Grok",
-    "count": 4,
+    "count": 5,
     "source": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/xai.list",
     "default": "proxy",
-    "sha256": "bcb943dbc025670fe18c85712e81faf990bf00ee5e1737fb69f9055c1867ecef",
+    "sha256": "dd7694e6508e4f8de399d0cfb5650957df59bf8983a9affcb6e48e7f6c9f3176",
     "build": "upstream"
   },
   "perplexity": {
